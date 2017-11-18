@@ -14,7 +14,7 @@
         "illuminate/contracts": "5.1.*|5.2.*|5.3.*|5.4.*",
         "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*",
         "graham-campbell/manager": "^2.3",
-        "dropbox/dropbox-sdk": "^1.1"
+        "alorel/dropbox-v2-php": "^0.4.2"
     },
     "require-dev": {
         "graham-campbell/testbench": "^3.1",
