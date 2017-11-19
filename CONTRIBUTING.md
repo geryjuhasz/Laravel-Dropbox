@@ -1,38 +1,18 @@
-CONTRIBUTING
-============
+# Contributing to the Dropbox v2 PHP SDK
 
+## Workflow
 
-Contributions are welcome, and are accepted via pull requests. Please review these guidelines before submitting any pull requests.
+ - Fork the project
+ - Make your changes. The **master** branch always contains the latest copy of stable code.
+ - **Write tests for your code**. Pull requests will be rejected if they do not have tests. 100% coverage is normally required - if you are unable to achieve this (e.g. API permission errors as seen with https://api.dropboxapi.com/2/files/permanently_delete) you must state the reasons. Be sure to read the [testing guide](https://github.com/Alorel/dropbox-v2-php/tree/master/tests#readme) - you'll need your own API key.
+ - Make a pull request into the **pull-staging** branch
 
+## Code guidelines
 
-## Guidelines
-
-* Please follow the [PSR-2 Coding Style Guide](http://www.php-fig.org/psr/psr-2/), enforced by [StyleCI](https://styleci.io/).
-* Ensure that the current tests pass, and if you've added something new, add the tests where relevant.
-* Send a coherent commit history, making sure each individual commit in your pull request is meaningful.
-* You may need to [rebase](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) to avoid merge conflicts.
-* If you are changing the behavior, or the public api, you may need to update the docs.
-* Please remember that we follow [SemVer](http://semver.org/).
-
-
-## Running Tests
-
-You will need an install of [Composer](https://getcomposer.org/) before continuing.
-
-First, install the dependencies:
-
-```bash
-$ composer install
-```
-
-Then run PHPUnit:
-
-```bash
-$ vendor/bin/phpunit
-```
-
-If the test suite passes on your local machine you should be good to go.
-
-When you make a pull request, the tests will automatically be run again by [Travis CI](https://travis-ci.org/).
-
-We also have [StyleCI](https://styleci.io/) setup to automatically fix any code style issues.
+ - All code must comply with [PSR standards](http://www.php-fig.org/).
+ - Ideally, there should be no additional Composer requirements. You must state the reasoning behind new requirements if they are added.
+ - Do not have your IDE reformat any files you aren't working on
+ - Your code must **not** break compatibility with the versions listed in [.travis.yml](https://github.com/Alorel/dropbox-v2-php/blob/master/.travis.yml).
+ - PHPDoc comments are required. **Your pull request will be rejected if the code is not documented**.
+	 - Whilst on the topic, make sure to add `@author` PHPDoc tags to your code so people can contact you personally regarding your code.  
+ - Use [generators](https://secure.php.net/manual/en/language.generators.syntax.php) instead of arrays whenever possible - keep that memory footprint as low as possible!

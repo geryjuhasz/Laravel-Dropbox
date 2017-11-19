@@ -1,44 +1,43 @@
 {
-    "name": "geryjuhasz/laravel-dropbox",
-    "description": "Dropbox Is A Dropbox Bridge For Laravel 5",
-    "keywords": ["laravel", "framework", "dropbox", "files", "api", "dropbox bridge", "bridge", "Dropbox", "Laravel Dropbox", "Laravel-Dropbox"],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Graham Campbell",
-            "email": "graham@alt-three.com"
-        }
-    ],
-    "require": {
-        "php": ">=5.5.9",
-        "illuminate/contracts": "5.1.*|5.2.*|5.3.*|5.4.*",
-        "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*",
-        "graham-campbell/manager": "^2.3",
-        "alorel/dropbox-v2-php": "^0.4.2"
+  "name": "geryjuhasz/laravel-dropbox",
+  "description": "Dropbox Is A Dropbox Bridge For Laravel 5",
+  "keywords": ["laravel", "framework", "dropbox", "files", "api", "dropbox bridge", "bridge", "Dropbox", "Laravel Dropbox", "Laravel-Dropbox"],
+  "prefer-stable": true,
+  "type": "library",
+  "license": "",
+  "homepage": "https://github.com/geryjuhasz/Laravel-Dropbox",
+  "authors": [
+    {
+      "name": "Gergo Juhasz",
+      "email": "geryjuhasz@gmail.com"
     },
-    "require-dev": {
-        "graham-campbell/testbench": "^3.1",
-        "mockery/mockery": "^0.9.4",
-        "phpunit/phpunit": "^4.8|^5.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "GeryJuhasz\\Dropbox\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "GeryJuhasz\\Tests\\Dropbox\\": "tests/"
-        }
-    },
-    "config": {
-        "preferred-install": "dist"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "3.4-dev"
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    {
+      "name": "Eduard Szucs",
+      "email": "eddy.szucs@gmail.com"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/geryjuhasz/Laravel-Dropbox"
+  },
+  "require": {
+    "guzzlehttp/guzzle": "^6.0",
+    "guzzlehttp/psr7": "^1.0",
+    "aloframework/common": "^1.3 || ^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Alorel\\Dropbox\\": "src"
+    }
+  },
+  "require-dev": {
+    "raveren/kint": "^1.0",
+    "alorel/phpunit-auto-rerun": "^0.1",
+    "phpunit/phpunit": "^5.0",
+    "ramsey/uuid": "^3.5"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-dev-retriable-tests": "0.3-dev"
+    }
+  }
 }

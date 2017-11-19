@@ -1,160 +1,117 @@
-Laravel Dropbox
-===============
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/alorel/dropbox-v2-php.svg)](http://isitmaintained.com/project/alorel/dropbox-v2-php "Percentage of issues still open")
+[![Build Status](https://travis-ci.org/Alorel/dropbox-v2-php.svg?branch=master)](https://travis-ci.org/Alorel/dropbox-v2-php)
+[![codecov](https://codecov.io/gh/Alorel/dropbox-v2-php/branch/master/graph/badge.svg)](https://codecov.io/gh/Alorel/dropbox-v2-php)
+[![Dependency Status](https://www.versioneye.com/user/projects/5756bd6b7757a0004a1de150/badge.svg)](https://www.versioneye.com/user/projects/5756bd6b7757a0004a1de150)
 
-Laravel Dropbox was created by, and is maintained by [Graham Campbell](https://github.com/GrahamCampbell), and is a [Dropbox](https://github.com/dropbox/dropbox-sdk-php) bridge for [Laravel 5](http://laravel.com). It utilises my [Laravel Manager](https://github.com/GrahamCampbell/Laravel-Manager) package. Feel free to check out the [change log](CHANGELOG.md), [releases](https://github.com/GrahamCampbell/Laravel-Dropbox/releases), [license](LICENSE), and [contribution guidelines](CONTRIBUTING.md).
-
-![Laravel Dropbox](https://cloud.githubusercontent.com/assets/2829600/4432302/c13ca62a-468c-11e4-93d8-c64cec1b8748.PNG)
-
-<p align="center">
-<a href="https://styleci.io/repos/17052285"><img src="https://styleci.io/repos/17052285/shield" alt="StyleCI Status"></img></a>
-<a href="https://travis-ci.org/GrahamCampbell/Laravel-Dropbox"><img src="https://img.shields.io/travis/GrahamCampbell/Laravel-Dropbox/master.svg?style=flat-square" alt="Build Status"></img></a>
-<a href="https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Dropbox/code-structure"><img src="https://img.shields.io/scrutinizer/coverage/g/GrahamCampbell/Laravel-Dropbox.svg?style=flat-square" alt="Coverage Status"></img></a>
-<a href="https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Dropbox"><img src="https://img.shields.io/scrutinizer/g/GrahamCampbell/Laravel-Dropbox.svg?style=flat-square" alt="Quality Score"></img></a>
-<a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="Software License"></img></a>
-<a href="https://github.com/GrahamCampbell/Laravel-Dropbox/releases"><img src="https://img.shields.io/github/release/GrahamCampbell/Laravel-Dropbox.svg?style=flat-square" alt="Latest Version"></img></a>
-</p>
+[![Latest Stable Version](https://poser.pugx.org/alorel/dropbox-v2-php/v/stable)](https://packagist.org/packages/alorel/dropbox-v2-php)
+[![Total Downloads](https://poser.pugx.org/alorel/dropbox-v2-php/downloads)](https://packagist.org/packages/alorel/dropbox-v2-php)
+[![License](https://poser.pugx.org/alorel/dropbox-v2-php/license)](https://packagist.org/packages/alorel/dropbox-v2-php)
 
 
-## Installation
+Tested with PHP 5.6-7.1 and HHVM 3.18. See the [CI builds](https://travis-ci.org/Alorel/dropbox-v2-php/builds) page for the most accurate, up-to-date version list.
 
-Laravel Dropbox requires [PHP](https://php.net) 5.5+. This particular version supports Laravel 5.1, 5.2, 5.3, or 5.4 only.
+----------
 
-To get the latest version, simply require the project using [Composer](https://getcomposer.org):
+# Maintainer(s) needed!
 
-```bash
-$ composer require graham-campbell/dropbox
+[10 Feb 2017] Unfortunately, I do not have time to maintain this SDK. I do not expect it to become out-of-date in terms of functionality for at least another year, but it won't be adding any new functionality. Please [open an issue](https://github.com/Alorel/dropbox-v2-php/issues) if you're interested.
+
+-----
+
+A PHP SDK for Dropbox's v2 API. If you haven't tried Dropbox out yet, [do](https://db.tt/u56WHf8q "referral link") - it's great!
+
+# Table of Contents
+
+ 1. [Installation](#installation)
+ 1. [Usage](#usage)
+ 1. [Supported API operations](#supported-api-operations)
+ 1. [API Documentation](#api-documentation)
+
+# Installation
+
+Installation is only available via [Composer](https://getcomposer.org/).
+
+## Quick version:
+
+```sh
+composer require alorel/dropbox-v2-php
 ```
 
-Once installed, you need to register the `GrahamCampbell\Dropbox\DropboxServiceProvider` service provider in your `config/app.php`, and optionally alias our facade:
+## More informed version:
+
+The package is still in its `0.x` development stage, therefore adding it as a `^` dependency, e.g. `"alorel/dropbox-v2-php":"^0.1"` will severely limit the amount of updates you receive, as, per [semver](http://semver.org/#spec-item-4) specification, `0.2` is allowed to be backwards-incompatible with `0.1`. While I definitely cannot guarantee **full** backwards compatibility if you fiddle with protected methods and derive your own subclasses, I do guarantee that the public API will remain backwards-compatible, therefore, if you only use the `raw` methods in your application e.g.
 
 ```php
-        'Dropbox' => GrahamCampbell\Dropbox\Facades\Dropbox::class,
+$options = new UploadOptions(); //set your options
+(new Upload())->raw('/file.txt', 'data', $options);
 ```
 
+You can safely add the following as a dependency in your composer.json:
 
-## Configuration
-
-Laravel Dropbox requires connection configuration.
-
-To get started, you'll need to publish all vendor assets:
-
-```bash
-$ php artisan vendor:publish
-```
-
-This will create a `config/dropbox.php` file in your app that you can modify to set your configuration. Also, make sure you check for changes to the original config file in this package between releases.
-
-There are two config options:
-
-##### Default Connection Name
-
-This option (`'default'`) is where you may specify which of the connections below you wish to use as your default connection for all work. Of course, you may use many connections at once using the manager class. The default value for this setting is `'main'`.
-
-##### Dropbox Connections
-
-This option (`'connections'`) is where each of the connections are setup for your application. Example configuration has been included, but you may add as many connections as you would like.
-
-
-## Usage
-
-##### DropboxManager
-
-This is the class of most interest. It is bound to the ioc container as `'dropbox'` and can be accessed using the `Facades\Dropbox` facade. This class implements the `ManagerInterface` by extending `AbstractManager`. The interface and abstract class are both part of my [Laravel Manager](https://github.com/GrahamCampbell/Laravel-Manager) package, so you may want to go and checkout the docs for how to use the manager class over at [that repo](https://github.com/GrahamCampbell/Laravel-Manager#usage). Note that the connection class returned will always be an instance of `\Dropbox\Client`.
-
-##### Facades\Dropbox
-
-This facade will dynamically pass static method calls to the `'dropbox'` object in the ioc container which by default is the `DropboxManager` class.
-
-##### DropboxServiceProvider
-
-This class contains no public methods of interest. This class should be added to the providers array in `config/app.php`. This class will setup ioc bindings.
-
-##### Real Examples
-
-Here you can see an example of just how simple this package is to use. Out of the box, the default adapter is `main`. After you enter your authentication details in the config file, it will just work:
-
-```php
-use GrahamCampbell\Dropbox\Facades\Dropbox;
-// you can alias this in config/app.php if you like
-
-Dropbox::createFolder('foo');
-// we're done here - how easy was that, it just works!
-
-Dropbox::delete('foo');
-// this example is simple, and there are far more methods available
-```
-
-The dropbox manager will behave like it is a `\Dropbox\Client` class. If you want to call specific connections, you can do with the `connection` method:
-
-```php
-use GrahamCampbell\Dropbox\Facades\Dropbox;
-
-// the alternative connection is the other example provided in the default config
-// let's create a copy ref so we can copy a file to the main connection
-$ref = Dropbox::connection('alternative')->createCopyRef('foo');
-
-// let's copy the file over to the other connection
-// note that using the connection method here is optional
-Dropbox::connection('main')->copyFromCopyRef($ref, 'bar');
-```
-
-With that in mind, note that:
-
-```php
-use GrahamCampbell\Dropbox\Facades\Dropbox;
-
-// writing this:
-Dropbox::connection('main')->createFolder('foo');
-
-// is identical to writing this:
-Dropbox::createFolder('foo');
-
-// and is also identical to writing this:
-Dropbox::connection()->createFolder('foo');
-
-// this is because the main connection is configured to be the default
-Dropbox::getDefaultConnection(); // this will return main
-
-// we can change the default connection
-Dropbox::setDefaultConnection('alternative'); // the default is now alternative
-```
-
-If you prefer to use dependency injection over facades like me, then you can easily inject the manager like so:
-
-```php
-use GrahamCampbell\Dropbox\DropboxManager;
-use Illuminate\Support\Facades\App; // you probably have this aliased already
-
-class Foo
+```json
 {
-    protected $dropbox;
-
-    public function __construct(DropboxManager $dropbox)
-    {
-        $this->dropbox = $dropbox;
-    }
-
-    public function bar()
-    {
-        $this->dropbox->createFolder('foo');
-    }
+  "require": {
+    "alorel/dropbox-v2-php": ">=0.4 <1.0"
+  }
 }
-
-App::make('Foo')->bar();
 ```
 
-For more information on how to use the `\Dropbox\Client` class we are calling behind the scenes here, check out the docs at http://dropbox.github.io/dropbox-sdk-php/api-docs/v1.1.x/source-class-Dropbox.Client.html, and the manager class at https://github.com/GrahamCampbell/Laravel-Manager#usage.
+Additionally, `composer outdated` is a useful command to know during the `0.x` development stage!
 
-##### Further Information
+# Usage
 
-There are other classes in this package that are not documented here. This is because they are not intended for public use and are used internally by this package.
+Every Dropbox API operation is located in the [\Alorel\Dropbox\Operation](https://cdn.rawgit.com/Alorel/dropbox-v2-php/0.3.3/docs/master/Alorel/Dropbox/Operation.html) namespace and is a class named after the API endpoint. There are a few exceptions to this, however, e.g. the class for `https://content.dropboxapi.com/2/files/upload_session/start` is `\Alorel\Dropbox\Operation\Files\UploadSession\Start`. 
 
+All operation classes inherit the AbstractOperation constructor:
 
-## Security
+```php
+  /**
+    * Operation constructor.
+    *
+    * @param bool   $async       Whether requests should be asynchronous
+    * @param string $accessToken Our access token
+    */
+    public function __construct($async = null, string $accessToken = null) {}
 
-If you discover a security vulnerability within this package, please send an e-mail to Graham Campbell at graham@alt-three.com. All security vulnerabilities will be promptly addressed.
+```
+The first parameter is a boolean determining whether operations should run synchronously or asynchronously (defaults to synchronous), the second is the access token created when the user authorises your application. Both can have default values set via [AbstractOperation::setDefaultToken()](https://cdn.rawgit.com/Alorel/dropbox-v2-php/0.3.3/docs/master/Alorel/Dropbox/Operation/AbstractOperation.html#method_setDefaultToken) and [AbstractOperation::setDefaultAsync()](https://cdn.rawgit.com/Alorel/dropbox-v2-php/0.3.3/docs/master/Alorel/Dropbox/Operation/AbstractOperation.html#method_setDefaultAsync) respectively.
 
+Currently the only supported way of making requests is with the respective operation class' `raw` method, which will return an instance of `PromiseInterface` when operating in asynchronous mode or an instance of `ResponseInterface` if operating in synchronous mode. See [guzzlephp.org](http://guzzlephp.org/) for more information on promises and responses.
 
-## License
+In future releases I will be adding 'management' classes that will automatically format the response.
 
-Laravel Dropbox is licensed under [The MIT License (MIT)](LICENSE).
+# Supported API Operations
+
+Unless specified otherwise, any operation that is not currently supported will be added in a future release.
+
+## Files
+All except:
+
+- [ ] /alpha/get_metadata | *In Beta/Alpha on Dropbox - will implement once stable*
+- [ ] /alpha/upload | *In Beta/Alpha on Dropbox - will implement once stable*
+- [ ] /properties/add | *In Beta/Alpha on Dropbox - will implement once stable*
+- [ ] /properties/overwrite | *In Beta/Alpha on Dropbox - will implement once stable*
+- [ ] /properties/remove | *In Beta/Alpha on Dropbox - will implement once stable*
+- [ ] /properties/template/get | *In Beta/Alpha on Dropbox - will implement once stable*
+- [ ] /properties/template/list | *In Beta/Alpha on Dropbox - will implement once stable*
+- [ ] /properties/update | *In Beta/Alpha on Dropbox - will implement once stable*
+
+## Users
+
+All
+
+# API Documentation
+
+[0.4](https://cdn.rawgit.com/Alorel/dropbox-v2-php/0.4/docs/master/index.html) |
+[0.3.3](https://cdn.rawgit.com/Alorel/dropbox-v2-php/0.3.3/docs/master/index.html) |
+[0.2](https://cdn.rawgit.com/Alorel/dropbox-v2-php/0.2/docs/master/index.html) |
+[0.1.1](https://cdn.rawgit.com/Alorel/dropbox-v2-php/0.1.1/docs/master/index.html) |
+[0.1](https://cdn.rawgit.com/Alorel/dropbox-v2-php/0.1/docs/master/index.html)
+
+----------
+
+# Links
+
+ - [Changelog](https://github.com/Alorel/dropbox-v2-php/releases)
+ - [Dropbox HTTP API docs](https://www.dropbox.com/developers/documentation/http/documentation) (this library is merely a HTTP request wrapper)
+ - [Dropbox API explorer](https://dropbox.github.io/dropbox-api-v2-explorer)
