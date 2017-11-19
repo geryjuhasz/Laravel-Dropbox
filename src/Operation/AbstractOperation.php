@@ -92,7 +92,8 @@
          * @throws NoTokenException If $accessToken is not provided and the {@link AbstractOperation::$defaultToken default token} hasn't been set via {@link AbstractOperation::setDefaultToken() setDefaultToken()}
          */
         public function __construct($async = null, $accessToken = null) {
-            $this->token = Alo::ifnull($accessToken, self::$defaultToken, true);
+            $this->token = config('dropbox-v2.token');
+            //$this->token = Alo::ifnull($accessToken, self::$defaultToken, true);
             if (!$this->token) {
                 throw new NoTokenException();
             }
